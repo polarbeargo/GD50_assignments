@@ -232,7 +232,7 @@ function love.update(dt)
     --
     -- paddles can move no matter what state we're in
     --
-    -- player 1
+    -- Set player 1 is an AI-controlled paddle
     if love.keyboard.isDown('w') then
         player1.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('s') then
