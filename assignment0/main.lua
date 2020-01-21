@@ -241,10 +241,10 @@ function love.update(dt)
         player1.dy = 0
     end
 
-    -- pSet player 2 is an AI-controlled paddle
-    if love.keyboard.isDown('up') then
+    -- Set player 2 is an AI-controlled paddle
+    if love.keyboard.moveDown(ball) then
         player2.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown('down') then
+    elseif love.keyboard.moveUp(ball) then
         player2.dy = PADDLE_SPEED
     else
         player2.dy = 0
