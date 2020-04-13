@@ -70,3 +70,11 @@ end
         this feels like an excellent place to put the code we need! Once either the left or right paddle (or both, if desired) 
         try to deflect the paddle on their own, you’ve done it!
 ]]
+
+function Paddle:moveDown()
+
+end
+
+function Paddle:moveUp()
+
+end
