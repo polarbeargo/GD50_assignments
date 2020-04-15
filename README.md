@@ -11,3 +11,5 @@ This project aims to finish all assignments from [CS50's Introduction to Game De
 # Assignments References:
 
 * [Assignment 0: “Pong, The AI Update”](https://docs.cs50.net/games/2020/x/assignments/0/assignment0.html)
+* [Assignment 2: “Breakout, The Powerup Update”](https://docs.cs50.net/games/2020/x/assignments/2/assignment2.html)
+* [Assignment 3: “Match-3, The Shiny Update”](https://docs.cs50.net/games/2020/x/assignments/3/assignment3.html)
