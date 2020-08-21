@@ -242,13 +242,14 @@ function love.update(dt)
     end
 
     -- Set player 2 is an AI-controlled paddle
-    if love.keyboard.moveDown(ball) then
-        player2.dy = -PADDLE_SPEED
-    elseif love.keyboard.moveUp(ball) then
-        player2.dy = PADDLE_SPEED
-    else
-        player2.dy = 0
-    end
+    if ball.y < player2.y then
+		player2.dy = -PADDLE_SPEED
+	elseif ball.y + ball.height > player2.y + player2.height then
+		player2.dy = PADDLE_SPEED
+	else
+		player2.dy = 0
+	end
+    --player2.y = ball.y 
 
     -- update our ball based on its DX and DY only if we're in play state;
     -- scale the velocity by dt so movement is framerate-independent
