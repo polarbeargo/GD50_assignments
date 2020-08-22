@@ -241,15 +241,14 @@ function love.update(dt)
         player1.dy = 0
     end
 
-    -- Set player 2 is an AI-controlled paddle
-    if ball.y < player2.y then
-		player2.dy = -PADDLE_SPEED
-	elseif ball.y + ball.height > player2.y + player2.height then
-		player2.dy = PADDLE_SPEED
-	else
-		player2.dy = 0
-	end
-    --player2.y = ball.y 
+    -- player 2
+    if love.keyboard.isDown('up') then
+        player2.dy = -PADDLE_SPEED
+    elseif love.keyboard.isDown('down') then
+        player2.dy = PADDLE_SPEED
+    else
+        player2.dy = 0
+    end
 
     -- update our ball based on its DX and DY only if we're in play state;
     -- scale the velocity by dt so movement is framerate-independent
@@ -308,8 +307,8 @@ function love.draw()
     -- begin drawing with push, in our virtual resolution
     push:apply('start')
 
-    love.graphics.clear(40, 45, 52, 255)
-    
+    love.graphics.clear(.15, .17, .2, 1)
+
     -- render different things depending on which part of the game we're in
     if gameState == 'start' then
         -- UI messages
@@ -365,6 +364,6 @@ end
 function displayFPS()
     -- simple FPS display across all states
     love.graphics.setFont(smallFont)
-    love.graphics.setColor(0, 255, 0, 255)
+    love.graphics.setColor(0, 1, 0, 1)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
 end
