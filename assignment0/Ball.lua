@@ -64,4 +64,5 @@ end
 
 function Ball:render()
     love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+    love.graphics.setColor(0, 255, 0, 255)
 end
