@@ -64,7 +64,7 @@ local BACKGROUND_LOOPING_POINT = 413
 
 pause = false
 pauseBtn = love.graphics.newImage('pause.png')
-pause_scaling = 1
+pause_scaling = 0.15
 pause_height = pauseBtn:getHeight() * pause_scaling
 pause_width = pauseBtn:getWidth() * pause_scaling
 
