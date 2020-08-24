@@ -25,13 +25,26 @@ function ScoreState:update(dt)
     end
 end
 
+function getImageScaleForNewDimensions( image, newWidth, newHeight )
+    local currentWidth, currentHeight = image:getDimensions()
+    return ( newWidth / currentWidth ), ( newHeight / currentHeight )
+end
+
 function ScoreState:render()
     -- simply render the score to the middle of the screen
     love.graphics.setFont(flappyFont)
     love.graphics.printf('Oof! You lost!', 0, 64, VIRTUAL_WIDTH, 'center')
-
     love.graphics.setFont(mediumFont)
     love.graphics.printf('Score: ' .. tostring(self.score), 0, 100, VIRTUAL_WIDTH, 'center')
-
     love.graphics.printf('Press Enter to Play Again!', 0, 160, VIRTUAL_WIDTH, 'center')
+    
+    local medal = love.graphics.newImage('brozen.png')
+    if self.score >= 30 then 
+        medal = love.graphics.newImage('silver.png')
+    elseif self.score >= 90 then 
+        medal = love.graphics.newImage('Top.png')
+    end 
+
+    local scaleX, scaleY = getImageScaleForNewDimensions( medal, 100, 100 )
+    love.graphics.draw(medal, 100, 100, scaleX, scaleY)
 end
