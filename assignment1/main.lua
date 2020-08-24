@@ -62,6 +62,12 @@ local GROUND_SCROLL_SPEED = 60
 
 local BACKGROUND_LOOPING_POINT = 413
 
+pause = false
+pauseBtn = love.graphics.newImage('pause.png')
+pause_scaling = 1
+pause_height = pauseBtn:getHeight() * pause_scaling
+pause_width = pauseBtn:getWidth() * pause_scaling
+
 function love.load()
     -- initialize our nearest-neighbor filter
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -85,7 +91,7 @@ function love.load()
         ['explosion'] = love.audio.newSource('explosion.wav', 'static'),
         ['hurt'] = love.audio.newSource('hurt.wav', 'static'),
         ['score'] = love.audio.newSource('score.wav', 'static'),
-
+        ['pause'] = love.audio.newSource('pause.wav', 'static'),
         -- https://freesound.org/people/xsgianni/sounds/388079/
         ['music'] = love.audio.newSource('marios_way.mp3', 'static')
     }
@@ -128,6 +134,17 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     end
+
+    if key == 'p' then
+		if pause == false then
+			sounds['music']:pause()
+			sounds['pause']:play()
+			pause = true
+		elseif pause == true then
+			sounds['music']:play()
+			pause = false
+		end
+	end
 end
 
 --[[
@@ -155,10 +172,11 @@ end
 
 function love.update(dt)
     -- scroll our background and ground, looping back to 0 after a certain amount
-    backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
-    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
-
-    gStateMachine:update(dt)
+    if pause == false then
+        backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
+        groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
+        gStateMachine:update(dt)
+    end
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
@@ -170,6 +188,10 @@ function love.draw()
     love.graphics.draw(background, -backgroundScroll, 0)
     gStateMachine:render()
     love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - 16)
+
+    if pause == true then
+		love.graphics.draw(pauseBtn, VIRTUAL_WIDTH/2 - pause_width/2, VIRTUAL_HEIGHT/2 - pause_height/2, 0, pause_scaling, pause_scaling)
+	end
     
     push:finish()
 end
