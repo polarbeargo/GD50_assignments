@@ -75,3 +75,8 @@ function Paddle:render()
     love.graphics.draw(gTextures['main'], gFrames['paddles'][self.size + 4 * (self.skin - 1)],
         self.x, self.y)
 end
+
+function Paddle:resize(size)
+    self.size = size
+    self.width = size * 32
+end
