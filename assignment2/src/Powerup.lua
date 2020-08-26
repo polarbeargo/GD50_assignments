@@ -40,7 +40,10 @@ function Powerup:update(dt)
 end 
 
 function Powerup:collision(target)
-
+    if self.y > target.y + target.height or target.y > self.y + self.height and self.x > target.x + target.width or target.x > self.x + self.width then
+		return false
+    end
+    return true
 end 
 
 function Powerup:render()
