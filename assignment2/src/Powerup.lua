@@ -16,7 +16,23 @@
 Powerup = Class{}
 
 function Powerup:init(x, y, key_valid)
+    self.x = x
+	self.y = y
+	self.dx = 0
+	self.dy = 0
+	self.width = 32
+    self.height = 32
+    self.collision = false
 
+	-- Variables for blink timer
+	self.blinkTimer = 0
+	self.startTimer = 0
+    self.visible = true
+    if key_valid then
+		self.type = 50
+	else
+		self.type = love.math.random(1, 20)
+	end
 end
 
 function Powerup:update(dt)
