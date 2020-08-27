@@ -66,7 +66,7 @@ function love.load()
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
         ['balls'] = GenerateQuadsBalls(gTextures['main']),
         ['bricks'] = GenerateQuadsBricks(gTextures['main']),
-        ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9)
+        ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9),
         ['powerup'] = GenerateQuadsBricks(gTexture['main'])
     }
     
@@ -94,7 +94,7 @@ function love.load()
         ['recover'] = love.audio.newSource('sounds/recover.wav', 'static'),
         ['high-score'] = love.audio.newSource('sounds/high_score.wav', 'static'),
         ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),
-        ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static')
+        ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static'),
         ['music'] = love.audio.newSource('sounds/music.wav', 'static')
     }
 
