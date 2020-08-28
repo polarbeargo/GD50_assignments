@@ -20,6 +20,7 @@ This project aims to finish all assignments from [CS50's Introduction to Game De
 * [Assignment 3: “Match-3, The Shiny Update”](https://docs.cs50.net/games/2020/x/assignments/3/assignment3.html)
 * [Assignment 4: “Super Mario Bros., The Key and Lock Update”](https://docs.cs50.net/games/2020/x/assignments/4/assignment4.html)
 * [Assignment 5: “Legend of Zelda, The Pot Update”](https://docs.cs50.net/games/2020/x/assignments/5/assignment5.html)
+* [Assignment 6: “Angry Birds, The Tri-Shot Update”](https://cs50.harvard.edu/games/2018/assignments/6/)
 * [Assignment 7: “Pokémon, The Level-Up Update”](https://cs50.harvard.edu/games/2018/assignments/7/)
 * [Assignment 8: “Helicopter Game 3D, The Gem Update”](https://cs50.harvard.edu/games/2018/assignments/8/)
 * [Assignment 9: “Dreadhalls, The Tumble Update”](https://cs50.harvard.edu/games/2018/assignments/9/#assignment-9-dreadhalls-the-tumble-update)
