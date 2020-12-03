@@ -39,7 +39,7 @@ function ScoreState:render()
     love.graphics.printf('Press Enter to Play Again!', 0, 160, VIRTUAL_WIDTH, 'center')
 
     local medal = love.graphics.newImage('brozen.png')
-    if self.score >= 5 then 
+    if self.score >=5 and self.score <= 9 then 
         medal = love.graphics.newImage('silver.png')
     elseif self.score >= 10 then 
         medal = love.graphics.newImage('Top.png')
