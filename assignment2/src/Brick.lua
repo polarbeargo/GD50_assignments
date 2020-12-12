@@ -85,6 +85,9 @@ function Brick:init(x, y)
 
     -- spread of particles; normal looks more natural than uniform
     self.psystem:setAreaSpread('normal', 10, 10)
+
+    -- CS50: Set spawn statuse flag
+    self.isSpawn = false;
 end
 
 --[[
@@ -92,6 +95,8 @@ end
     changing its color otherwise.
 ]]
 function Brick:hit()
+    POWERUP_SPAWN_PROB = 0.5
+    
     if hasKey and self.locked then
 		self.psystem:setParticleLifetime(1, 3)
 		self.psystem:setAreaSpread('normal', 15, 15)
@@ -157,6 +162,12 @@ function Brick:hit()
         if not self.inPlay then
             gSounds['brick-hit-1']:stop()
             gSounds['brick-hit-1']:play()
+
+            if( math.random()  <= POWERUP_SPAWN_PROB) then
+                self.isSpawn = true;
+            else
+                self.isSpawn= false;
+            end
         end 
     end    
 end
