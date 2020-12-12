@@ -94,6 +94,11 @@ function PlayState:update(dt)
 
                 -- multiply recover points by 2
                 self.recoverPoints = math.min(100000, self.recoverPoints * 2)
+                
+                --CS50: paddle grow
+                if self.paddle.size < 4 then
+                    self.paddle:resize(self.paddle.size + 1)
+                end
 
                 -- play recover sound effect
                 gSounds['recover']:play()
@@ -168,6 +173,11 @@ function PlayState:update(dt)
     if self.ball.y >= VIRTUAL_HEIGHT then
         self.health = self.health - 1
         gSounds['hurt']:play()
+        
+        -- CS50: paddle shrink when loosing heart
+        if self.paddle.size > 1 then
+            self.paddle:resize(self.paddle.size -1)
+        end
 
         if self.health == 0 then
             gStateMachine:change('game-over', {
