@@ -96,7 +96,8 @@ function love.load()
         ['high-score'] = love.audio.newSource('sounds/high_score.wav', 'static'),
         ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),
         ['powerup'] = love.audio.newSource('sounds/powerup.wav', 'static'),
-        ['music'] = love.audio.newSource('sounds/music.wav', 'static')
+        ['music'] = love.audio.newSource('sounds/music.wav', 'static'),
+        ['locked'] = love.audio.newSource('sounds/door-lock-1.wav', 'static')
     }
 
     -- the state machine we'll be using to transition between various states
