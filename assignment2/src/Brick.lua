@@ -95,7 +95,6 @@ end
     changing its color otherwise.
 ]]
 function Brick:hit()
-    POWERUP_SPAWN_PROB = 0.5
     
     if hasKey and self.locked then
 		self.psystem:setParticleLifetime(1, 3)
