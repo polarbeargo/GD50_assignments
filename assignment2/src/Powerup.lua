@@ -36,7 +36,8 @@ function Powerup:init(x, y, key_valid)
 end
 
 function Powerup:update(dt)
-
+	self.x = self.x + self.dx * dt
+    self.y = self.y + self.dy * dt
 end 
 
 function Powerup:collision(target)
