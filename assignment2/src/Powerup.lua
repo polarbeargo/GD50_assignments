@@ -49,6 +49,6 @@ end
 
 function Powerup:render()
     if self.visible then
-		love.graphics.draw(gTextures['main'], gFrames['powerups'][self.type], self.x, self.y)
+		love.graphics.draw(gTextures['main'], gFrames['powerup'][self.type], self.x, self.y)
 	end
 end
