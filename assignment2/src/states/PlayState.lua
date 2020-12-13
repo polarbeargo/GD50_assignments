@@ -31,6 +31,9 @@ function PlayState:enter(params)
 
     self.recoverPoints = 5000
 
+    -- CS50 check has key powerup or not
+    self.key = false
+
     -- give ball random starting velocity
     self.ball.dx = math.random(-200, 200)
     self.ball.dy = math.random(-50, -60)
@@ -86,6 +89,15 @@ function PlayState:update(dt)
 
             -- trigger the brick's hit function, which removes it from play
             brick:hit()
+
+            -- CS50: check if user has key and brick is locked situation recover point  if unlocking locked brick
+            if self.key and brick.locked then
+                self.score = self.score + self.recoverPoints
+            elseif brick.locked then
+    
+            else 
+                self.score = self.score + (brick.tier * 200 + brick.color * 25)
+            end
 
             -- if we have enough points, recover a point of health
             if self.score > self.recoverPoints then
