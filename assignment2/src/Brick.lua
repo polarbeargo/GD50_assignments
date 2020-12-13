@@ -118,7 +118,7 @@ function Brick:hit()
 		gSounds['brick-hit-1']:play()
 		self.locked = false
 	elseif self.locked then
-        gSounds['wall-hit']:play()
+        gSounds['locked']:play()
     else
     -- set the particle system to interpolate between two colors; in this case, we give
     -- it our self.color but with varying alpha; brighter for higher tiers, fading to 0
