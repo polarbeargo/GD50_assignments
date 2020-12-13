@@ -34,6 +34,10 @@ function PlayState:enter(params)
     -- CS50 check has key powerup or not
     self.key = false
 
+    --CS50 record two more ball and powerups
+    self.balls = {}
+    self.powerups = {}
+  
     -- give ball random starting velocity
     self.ball.dx = math.random(-200, 200)
     self.ball.dy = math.random(-50, -60)
@@ -231,11 +235,22 @@ function PlayState:render()
     end
 
     self.paddle:render()
-    self.ball:render()
 
     renderScore(self.score)
     renderHealth(self.health)
+    
+     -- CS50: render multi ball and powerup
+    if self.balls > 0 then
+        for k, ball in pairs(self.balls) do
+            ball:render()
+        end
+    end
 
+    if self.powerups > 0 then
+        for k, powerup in pairs(self.powerups) do
+            powerup:render()
+        end
+    end
     -- pause text, if paused
     if self.paused then
         love.graphics.setFont(gFonts['large'])
