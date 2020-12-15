@@ -69,6 +69,16 @@ function PlayState:update(dt)
         end
     end
 
+    if #self.powerups > 0 then
+        for k, powerup in pairs(self.powerups) do
+            powerup:update(dt)
+            if powerup:collides(self.paddle) then
+                table.remove(self.powerups, k)
+                powerup:destroy()
+            end
+        end
+    end
+
     -- detect collision across all bricks with the ball
     for k, brick in pairs(self.bricks) do
         -- only check collision if we're in play
