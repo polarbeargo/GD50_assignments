@@ -56,8 +56,7 @@ function love.load()
         ['main'] = love.graphics.newImage('graphics/breakout.png'),
         ['arrows'] = love.graphics.newImage('graphics/arrows.png'),
         ['hearts'] = love.graphics.newImage('graphics/hearts.png'),
-        ['particle'] = love.graphics.newImage('graphics/particle.png'),
-        ['powerup'] = love.graphics.newImage('graphics/powerup.png')
+        ['particle'] = love.graphics.newImage('graphics/particle.png')
     }
 
     -- Quads we will generate for all of our textures; Quads allow us
