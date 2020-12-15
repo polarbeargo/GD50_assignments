@@ -48,11 +48,11 @@ paletteColors = {
         ['g'] = 242,
         ['b'] = 54
     },
-    -- black
+    -- yellow
     [6] = {
         ['r'] = 255,
         ['g'] = 255,
-        ['b'] = 255
+        ['b'] = 0
     }
 }
 
@@ -95,31 +95,6 @@ end
     changing its color otherwise.
 ]]
 function Brick:hit()
-    
-    if hasKey and self.locked then
-		self.psystem:setParticleLifetime(1, 3)
-		self.psystem:setAreaSpread('normal', 15, 15)
-		self.psystem:setColors(
-			paletteColors[self.color].r,
-            paletteColors[self.color].g,
-			0,
-			55  * (self.tier + 1),
-			paletteColors[self.color].r,
-            paletteColors[self.color].g,
-			0,
-			0
-		)
-		self.psystem:emit(1024)
-
-		self.psystem:setParticleLifetime(0.5, 1)
-		self.psystem:setAreaSpread('normal', 10, 10)
-		
-		gSounds['brick-hit-1']:stop()
-		gSounds['brick-hit-1']:play()
-		self.locked = false
-	elseif self.locked then
-        gSounds['locked']:play()
-    else
     -- set the particle system to interpolate between two colors; in this case, we give
     -- it our self.color but with varying alpha; brighter for higher tiers, fading to 0
     -- over the particle's lifetime (the second color)
@@ -141,7 +116,11 @@ function Brick:hit()
 
         -- if we're at a higher tier than the base, we need to go down a tier
         -- if we're already at the lowest color, else just go down a color
-        if self.tier > 0 then
+        if self.color == 6 then
+            if(self.tier == 1) then
+                self.inPlay = false
+            end
+        elseif self.tier > 0 then
             if self.color == 1 then
                 self.tier = self.tier - 1
                 self.color = 5
@@ -168,20 +147,13 @@ function Brick:hit()
                 self.isSpawn= false;
             end
         end 
-    end    
-end
+end    
 
 function Brick:update(dt)
     self.psystem:update(dt)
 end
 
 function Brick:render()
-
-    if self.inPlay and self.locked then
-		love.graphics.draw(gTextures['main'],
-			gFrames['bricks'][30],
-            self.x, self.y)
-            
     if self.inPlay then
         love.graphics.draw(gTextures['main'], 
             -- multiply color by 4 (-1) to get our color offset, then add tier to that
@@ -198,6 +170,4 @@ end
 
 function Brick:renderParticles()
     love.graphics.draw(self.psystem, self.x + 16, self.y + 8)
-end
-
 end
