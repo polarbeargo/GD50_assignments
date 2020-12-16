@@ -35,7 +35,7 @@ function PlayState:enter(params)
     self.key = false
 
     --CS50 record two more ball and powerups
-    self.balls = {}
+    self.balls = {params.ball}
     self.powerups = {}
   
     -- give ball random starting velocity
