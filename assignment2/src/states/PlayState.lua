@@ -115,7 +115,17 @@ function PlayState:update(dt)
                     -- play recover sound effect
                     gSounds['recover']:play()
                 end
-
+                
+                -- CS50: % chance getting a powerup if pwerup 20% is key
+                if math.random(100) < 30 then  
+                    if math.random(100) < 20 then 
+                        key_valid = true
+                    else
+                        key_valid = false
+                    end
+                    pu = Powerup(key_valid, self.ball.x, self.ball.y)
+                    table.insert(self.powerups, pu)
+                end
                     -- go to our victory screen if there are no more bricks left
                 if self:checkVictory() then
                     gSounds['victory']:play()
@@ -187,21 +197,18 @@ function PlayState:render()
 
     self.paddle:render()
 
-    renderScore(self.score)
-    renderHealth(self.health)
-    
      -- CS50: render multi ball and powerup
-    if (#self.balls > 0) then
-        for k, ball in pairs(self.balls) do
-            ball:render()
-        end
+    for k, ball in pairs(self.balls) do
+        ball:render()
     end
 
-    if (#self.powerups > 0) then
-        for k, powerup in pairs(self.powerups) do
-            powerup:render()
-        end
+    for k, powerup in pairs(self.powerups) do
+        powerup:render()
     end
+
+    renderScore(self.score)
+    renderHealth(self.health)
+     
     -- pause text, if paused
     if self.paused then
         love.graphics.setFont(gFonts['large'])
