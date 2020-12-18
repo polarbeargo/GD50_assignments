@@ -37,6 +37,7 @@ function PlayState:enter(params)
     --CS50 record two more ball and powerups
     self.balls = {params.ball}
     self.powerups = {}
+    self.num_ball = 1
   
     -- give ball random starting velocity
     self.ball.dx = math.random(-200, 200)
@@ -85,71 +86,70 @@ function PlayState:update(dt)
         if brick.inPlay and self.ball:collides(brick) then
 
             -- add to score
-            self.score = self.score + (brick.tier * 200 + brick.color * 25)
+            if(brick.color ~= 6) then
+                self.score = self.score + (brick.tier * 200 + brick.color * 25)
+            else
+                if(brick.tier == 1) then
+                    self.score = self.score + (1000 + brick.color * 25)
+                end
+            end
+
 
             -- trigger the brick's hit function, which removes it from play
             brick:hit()
 
-            -- CS50: check if user has key and brick is locked situation recover point  if unlocking locked brick
-            if self.key and brick.locked then
-                self.score = self.score + self.recoverPoints
-                elseif brick.locked then
-    
-                else 
-                    self.score = self.score + (brick.tier * 200 + brick.color * 25)
+            -- if we have enough points, recover a point of health
+            if self.score > self.recoverPoints then
+                -- can't go above 3 health
+                self.health = math.min(3, self.health + 1)
+
+                -- multiply recover points by 2
+                self.recoverPoints = math.min(100000, self.recoverPoints * 2)
+                
+                --CS50: paddle grow
+                if self.paddle.size < 4 then
+                    self.paddle:resize(self.paddle.size + 1)
+                end
+
+                -- play recover sound effect
+                gSounds['recover']:play()
             end
-
-                -- if we have enough points, recover a point of health
-                if self.score > self.recoverPoints then
-                    -- can't go above 3 health
-                    self.health = math.min(3, self.health + 1)
-
-                    -- multiply recover points by 2
-                    self.recoverPoints = math.min(100000, self.recoverPoints * 2)
                 
-                    --CS50: paddle grow
-                    if self.paddle.size < 4 then
-                        self.paddle:resize(self.paddle.size + 1)
-                    end
+            -- CS50: % chance getting a powerup if pwerup 20% is key
+            if math.random(100) < 30 then  
+                if math.random(100) < 20 then 
+                    key_valid = true
+                else
+                    key_valid = false
+                end
+                pu = Powerup(key_valid, self.ball.x, self.ball.y)
+                table.insert(self.powerups, pu)
+            end
+            -- go to our victory screen if there are no more bricks left
+            if self:checkVictory() then
+                gSounds['victory']:play()
 
-                    -- play recover sound effect
-                    gSounds['recover']:play()
-                end
-                
-                -- CS50: % chance getting a powerup if pwerup 20% is key
-                if math.random(100) < 30 then  
-                    if math.random(100) < 20 then 
-                        key_valid = true
-                    else
-                        key_valid = false
-                    end
-                    pu = Powerup(key_valid, self.ball.x, self.ball.y)
-                    table.insert(self.powerups, pu)
-                end
-                    -- go to our victory screen if there are no more bricks left
-                if self:checkVictory() then
-                    gSounds['victory']:play()
-
-                    gStateMachine:change('victory', {
-                        level = self.level,
-                        paddle = self.paddle,
-                        health = self.health,
-                        score = self.score,
-                        highScores = self.highScores,
-                        ball = self.ball,
-                        recoverPoints = self.recoverPoints
-                    })
-                end
-                brickCollision(ball, brick)
+                gStateMachine:change('victory', {
+                    level = self.level,
+                    paddle = self.paddle,
+                    health = self.health,
+                    score = self.score,
+                    highScores = self.highScores,
+                    ball = self.ball,
+                    recoverPoints = self.recoverPoints
+                })
+            end
+            brickCollision(ball, brick)
             -- only allow colliding with one brick, for corners
-                break
+            break
         end
     end
 
     -- if ball goes below bounds, revert to serve state and decrease health
     if self.ball.y >= VIRTUAL_HEIGHT then
-        self.health = self.health - 1
-        gSounds['hurt']:play()
+        if self.num_ball <= 1 then 
+            self.health = self.health - 1
+             gSounds['hurt']:play()
         
         -- CS50: paddle shrink when loosing heart
         if self.paddle.size > 1 then
@@ -173,10 +173,10 @@ function PlayState:update(dt)
             })
         end 
     else
-        
-        ball = nil
+        table.remove( self.balls, k )
+        self.num_ball = self.num_ball - 1
     end
-
+end
     -- for rendering particle systems
     for k, brick in pairs(self.bricks) do
         brick:update(dt)
