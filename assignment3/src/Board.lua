@@ -13,15 +13,15 @@
 
 Board = Class{}
 
-function Board:init(x, y)
+function Board:init(x, y, level)
     self.x = x
     self.y = y
     self.matches = {}
 
-    self:initializeTiles()
+    self:initializeTiles(level)
 end
 
-function Board:initializeTiles()
+function Board:initializeTiles(level)
     self.tiles = {}
 
     for tileY = 1, 8 do
