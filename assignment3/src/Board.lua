@@ -62,19 +62,12 @@ function Board:calculateMatches()
         matchNum = 1
         shiny = false
 
-        if self.tiles[y][1].shiny then
-            shiny = true
-        end
-
         -- every horizontal tile
         for x = 2, 8 do
             
             -- if this is the same color as the one we're trying to match...
             if self.tiles[y][x].color == colorToMatch then
                 matchNum = matchNum + 1
-                if self.tiles[y][x].shiny then
-                    shiny = true
-                end
     
             else
                 
@@ -85,6 +78,12 @@ function Board:calculateMatches()
                 if matchNum >= 3 then
                     local match = {}
 
+                    for x2 = x - 1, x - matchNum, -1 do
+                        
+                        if self.tiles[y][x2].shiny then
+                            shinyMatch = true
+                        end
+                    end
                     -- go backwards from here by matchNum
                     if shiny then
                         for x2 = 1, 8 do
@@ -143,6 +142,12 @@ function Board:calculateMatches()
                 if matchNum >= 3 then
                     local match = {}
 
+                    for y2 = y - 1, y - matchNum, -1 do
+                        if self.tiles[y2][x].shiny then
+                            shiny = true
+                        end
+                    end
+
                     if shiny then
                         for column_y = 1, 8 do
                             table.insert(match, self.tiles[column_y][x])
@@ -168,7 +173,12 @@ function Board:calculateMatches()
         -- account for the last column ending with a match
         if matchNum >= 3 then
             local match = {}
-            
+            for y = 8, 8 - matchNum, -1 do
+                if self.tiles[y][x].shiny then
+                    shiny = true
+                end
+            end
+
             if shiny then
                 for column_y = 1, 8 do
                     table.insert(match, self.tiles[column_y][x])
@@ -203,6 +213,10 @@ function Board:removeMatches()
     end
 
     self.matches = nil
+end
+
+function Board:getNewTiles()
+    return {}
 end
 
 --[[
