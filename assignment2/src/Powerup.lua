@@ -37,6 +37,8 @@ function Powerup:update(dt)
     self.y = self.y + self.dy * dt
 end 
 
+function Powerup:destroy(game) end
+
 function Powerup:collision(target)
     if self.y > target.y + target.height or target.y > self.y + self.height and self.x > target.x + target.width or target.x > self.x + self.width then
 		return false

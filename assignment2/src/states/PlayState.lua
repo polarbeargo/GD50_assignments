@@ -72,7 +72,7 @@ function PlayState:update(dt)
             powerup:update(dt)
             if powerup:collides(self.paddle) then
                 table.remove(self.powerups, k)
-                powerup:destroy()
+                powerup:destroy(self)
             end
         end
     end
@@ -153,7 +153,7 @@ function PlayState:update(dt)
             end
         end
     end
-    
+
     -- if ball goes below bounds, revert to serve state and decrease health
     if self.ball.y >= VIRTUAL_HEIGHT then
         if self.num_ball <= 1 then 
