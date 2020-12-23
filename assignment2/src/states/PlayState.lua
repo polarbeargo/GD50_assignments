@@ -80,7 +80,7 @@ function PlayState:update(dt)
     if #self.balls > 0 then
         for k, ball in pairs(self.balls) do
             if ball:collides(self.paddle) then
-                ballCollision(ball, paddle)
+                ballCollision(ball, self.paddle)
             end
         end
     end
