@@ -76,7 +76,7 @@ function PlayState:update(dt)
             end
         end
     end
-
+    
     if #self.balls > 0 then
         for k, ball in pairs(self.balls) do
             if ball:collides(self.paddle) then
@@ -103,7 +103,7 @@ function PlayState:update(dt)
 
 
                     -- trigger the brick's hit function, which removes it from play
-                    brick:hit()
+                    brick:hit(self)
 
                     -- if we have enough points, recover a point of health
                     if self.score > self.recoverPoints then
@@ -129,7 +129,7 @@ function PlayState:update(dt)
                         else
                             key_valid = false
                         end
-                        pu = Powerup(key_valid, self.ball.x, self.ball.y)
+                        pu = Powerup(key_valid, ball.x, ball.y)
                         table.insert(self.powerups, pu)
                     end
                     -- go to our victory screen if there are no more bricks left
@@ -153,7 +153,7 @@ function PlayState:update(dt)
             end
         end
     end
-
+    
     -- if ball goes below bounds, revert to serve state and decrease health
     if self.ball.y >= VIRTUAL_HEIGHT then
         if self.num_ball <= 1 then 
