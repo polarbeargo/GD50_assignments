@@ -129,7 +129,7 @@ function PlayState:update(dt)
                         else
                             key_valid = false
                         end
-                        pu = Powerup(key_valid, ball.x, ball.y)
+                        pu = Powerup(key_valid, self.ball.dx, self.ball.dy)
                         table.insert(self.powerups, pu)
                     end
                     -- go to our victory screen if there are no more bricks left
@@ -214,10 +214,11 @@ function PlayState:render()
         ball:render()
     end
 
+   
     for k, powerup in pairs(self.powerups) do
         powerup:render()
     end
-
+      
     renderScore(self.score)
     renderHealth(self.health)
      

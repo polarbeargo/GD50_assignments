@@ -22,14 +22,13 @@ function Powerup:init(x, y, key_valid)
 	self.dy = 30
 	self.width = 32
     self.height = 32
-    self.collision = false
 
-    self.visible = true
     if key_valid then
-		self.type = 50
+		self.frame = gFrames['powerup'][10]
 	else
-		self.type = love.math.random(1, 20)
+		self.frame = gFrames['powerup'][9]
 	end
+
 end
 
 function Powerup:update(dt)
@@ -40,14 +39,20 @@ end
 function Powerup:destroy(game) end
 
 function Powerup:collision(target)
-    if self.y > target.y + target.height or target.y > self.y + self.height and self.x > target.x + target.width or target.x > self.x + self.width then
-		return false
+    if self.x > target.x + target.width or target.x > self.x + self.width then
+        return false
     end
+
+    -- then check to see if the bottom edge of either is higher than the top
+    -- edge of the other
+    if self.y > target.y + target.height or target.y > self.y + self.height then
+        return false
+    end 
+
+    -- if the above aren't true, they're overlapping
     return true
 end 
 
 function Powerup:render()
-    if self.visible then
-		love.graphics.draw(gTextures['main'], gFrames['powerup'][self.type], self.x, self.y)
-	end
+	love.graphics.draw(gTextures['main'], self.frame, self.x, self.y)
 end
