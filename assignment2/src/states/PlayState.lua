@@ -38,7 +38,7 @@ function PlayState:enter(params)
     self.balls = {params.ball}
     self.powerups = {}
     self.num_ball = 1
-  
+    self.powerup = Powerup()
     -- give ball random starting velocity
     self.ball.dx = math.random(-200, 200)
     self.ball.dy = math.random(-50, -60)
@@ -66,7 +66,7 @@ function PlayState:update(dt)
             ball:update(dt, self.paddle)
         end
     end
-
+    
     if #self.powerups > 0 then
         for k, powerup in pairs(self.powerups) do
             powerup:update(dt)
@@ -122,16 +122,23 @@ function PlayState:update(dt)
                         gSounds['recover']:play()
                     end
                 
-                    -- CS50: % chance getting a powerup if pwerup 20% is key
-                    if math.random(100) < 30 then  
-                        if math.random(100) < 20 then 
-                            key_valid = true
+                    -- CS50: spawn a new powerup
+                    if brick.isSpawner then  
+                        if math.random(100) > 50 then 
+                           powerType = 10
+                           self.powerup.inPlay = true
                         else
-                            key_valid = false
+                            powerType = math.random(9)
+                            self.powerup.inPlay = true
                         end
-                        pu = Powerup(key_valid, self.ball.dx, self.ball.dy)
+                        pu = Powerup(powerType, self.ball.dx, self.ball.dy)
                         table.insert(self.powerups, pu)
                     end
+
+                    if self.powerup.inPlay then
+                        self.powerup:update(dt)
+                    end
+
                     -- go to our victory screen if there are no more bricks left
                     if self:checkVictory() then
                         gSounds['victory']:play()

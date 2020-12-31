@@ -15,26 +15,32 @@
 
 Powerup = Class{}
 
-function Powerup:init(x, y, key_valid)
-    self.x = x
-	self.y = y
+function Powerup:init(x, y, powerType)
+    self.x = math.random(20, VIRTUAL_WIDTH - 20)
+    self.y = 120 + math.random(-30, 30)
 	self.dx = 0
-	self.dy = 30
-	self.width = 32
-    self.height = 32
-
-    if key_valid then
-		self.frame = gFrames['powerup'][10]
-	else
-		self.frame = gFrames['powerup'][9]
-	end
-
+	self.dy = 40
+	self.width = 16
+    self.height = 16
+	self.frame = powerType
+	self.inPlay = false
+	
 end
 
 function Powerup:update(dt)
-	self.x = self.x + self.dx * dt
-    self.y = self.y + self.dy * dt
+
+	self.y = self.y + self.dy * dt
+	if self.y > VIRTUAL_HEIGHT then
+        self:reset()
+    end
 end 
+
+function Powerup:reset()
+	self.x = math.random(20, VIRTUAL_WIDTH - 20)
+    self.y = 120 + math.random(-30, 30)
+    self.inPlay = false
+    self.timer = 0
+end
 
 function Powerup:destroy(game) end
 
@@ -48,11 +54,14 @@ function Powerup:collision(target)
     if self.y > target.y + target.height or target.y > self.y + self.height then
         return false
     end 
-
+	self:reset()
     -- if the above aren't true, they're overlapping
     return true
 end 
 
 function Powerup:render()
-	love.graphics.draw(gTextures['main'], self.frame, self.x, self.y)
+	local frame = gFrames['powerups'][self.frame]
+	if self.inPlay then
+		love.graphics.draw(gTextures['main'],frame, self.x, self.y)
+	end
 end
