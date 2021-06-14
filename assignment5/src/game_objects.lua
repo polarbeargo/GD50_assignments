@@ -24,6 +24,25 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
+    ['heart'] = {
+        type = 'heart',
+        texture = 'hearts',
+        frame = 5,
+        width = 16,
+        height = 16,
+        defaultState = 'idle',
+        states = {
+            ['idle'] = {
+                frame = 5
+            },
+            onConsume = function(self, room, k)
+                if room.player.health < 5 then
+                    room.player:heal(2)
+                    table.remove(room.objects, k)
+                end
+                return false
+            end
+    },
     ['pot'] = {
         -- TODO
     }
